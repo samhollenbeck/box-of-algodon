@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Baloo+2|Poppins&display=swap" rel="stylesheet">
+</head>
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #AC0000;
+  height: 100%;
+}
+
+table#dots{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#title{
+  color: white;
+  font-size: 120px;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  line-height: 110px;
+  /* font-family: 'Baloo 2', cursive; */
+}
+
+.dot {
+  height: 55px;
+  width: 55px;
+  background-color: white;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 12px;
+  margin-right: 12px;
+
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  color: #AC0000;
+  font-size: 65px;
+  line-height: 79px;
+  font-weight: bold;
+}
+
+@keyframes change {
+  0%{
+    background-position: 0 50%;
+  }
+  50%{
+    background-position: 100% 50%;
+  }
+  100%{
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes transitionIn {
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+}
+
+</style>
+<body>
+  <h1 id = "title">The Box of <br> Algodón</h1>
+  <table id = "dots">
+    <tr>
+      <th><span class="dot" id = "level-1">1</span></th>
+      <th><span class="dot" id = "level-2">2</span></th>
+      <th><span class="dot" id = "level-3">3</span></th>
+      <th><span class="dot" id = "level-4">4</span></th>
+    </tr>
+</table>
+</body>
+
+<script>
+  document.getElementById("level-1").addEventListener("click", function (){alert("Level 1")});
+  document.getElementById("level-2").addEventListener("click", function (){alert("Level 2")});
+  document.getElementById("level-3").addEventListener("click", function (){alert("Level 3")});
+  document.getElementById("level-4").addEventListener("click", function (){alert("Level 4")});
+</script>
