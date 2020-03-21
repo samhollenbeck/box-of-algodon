@@ -110,21 +110,25 @@ table#dots{
   function menuTransition(id){
     var element = document.getElementById(id)
     var position = element.getBoundingClientRect();
-    var x = position.left + element.clientWidth/2;;
-    var y = position.top + element.clientWidth/2;;
-    // console.log(element.clientWidth/2);
-    // console.log(maxRadius(element));
-    // console.log(x);
-    // console.log(y);
-    animate(element.clientWidth/2,maxRadius(element),x,y);
+    var cx = position.left + element.clientWidth/2;;
+    var cy = position.top + element.clientWidth/2;;
+
+    x = cx;
+    y = cy;
+    r = element.clientWidth/2;
+    max = maxRadius(element);
+    animate();
+
+    // animate(element.clientWidth/2,maxRadius(element),x,y);
+
   }
 
-  function animate(r,max,x,y){
+  function animate(){
     // console.log(r);
       c.clearRect(0,0,window.innerWidth, window.innerHeight);
 
       if(r<max){
-        requestAnimationFrame(animate(r+1,max,x,y));
+        requestAnimationFrame(animate);
       }
 
       c.beginPath();
@@ -132,7 +136,7 @@ table#dots{
       // c.arc(100,100,1000,0,Math.PI*2,false);
       c.fillStyle = "white";
       c.fill();
-      // r = r + 1;
+      r = r + 7;
   }
 
   function maxRadius(element){
@@ -144,18 +148,18 @@ table#dots{
 
     var maxDistance = 0.0;
 
-    if(x^2 + y^2 > maxDistance){
+    if(Math.sqrt(x**2 + y**2) > maxDistance){
       maxDistance = Math.sqrt(x**2 + y**2);
     }
-    if(x^2 + (h-y)^2 > maxDistance){
+    if(Math.sqrt(x**2 + (h-y)**2) > maxDistance){
       maxDistance = Math.sqrt(x**2 + (h-y)**2);
       // console.log(x^2 + y^2);
     }
-    if((w-x)^2 + y^2 > maxDistance){
+    if(Math.sqrt((w-x)**2 + y**2) > maxDistance){
       maxDistance = Math.sqrt((w-x)**2 + y**2);
     }
-    if(x^2 + y^2 > maxDistance){
-      maxDistance = Math.sqrt((w-x)**2 + (h-y)*2);
+    if(Math.sqrt((w-x)**2 + (h-y)**2) > maxDistance){
+      maxDistance = Math.sqrt((w-x)**2 + (h-y)**2);
     }
 
     return maxDistance;
