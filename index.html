@@ -119,8 +119,13 @@ table#dots{
     max = maxRadius(element);
     animate();
 
-    // animate(element.clientWidth/2,maxRadius(element),x,y);
+    var allLevels = ["level-1","level-2","level-3","level-4"];
 
+    for (const a of allLevels) {
+      if(a != id){
+        document.getElementById(a).innerHTML="";
+      }
+    }
   }
 
   function animate(){
