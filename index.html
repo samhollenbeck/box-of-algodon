@@ -24,12 +24,13 @@ table#dots{
 }
 
 #title{
-  color: white;
+  color: #FFFFFC;
   font-size: 120px;
   text-align: center;
   font-family: 'Poppins', sans-serif;
   line-height: 110px;
   transition: 2.5s;
+  transition-property: color;
 
   /* font-family: 'Baloo 2', cursive; */
 }
@@ -37,7 +38,7 @@ table#dots{
 .dot {
   height: 55px;
   width: 55px;
-  background-color: white;
+  background-color: #FFFFFC;
   border-radius: 50%;
   display: inline-block;
   margin-left: 12px;
@@ -83,21 +84,48 @@ table#dots{
   transition-timing-function: ease-in;
 }
 
-.arrows{
-  position: fixed;
-  width: 65px;
-  height:65px;
-  color: #000000;
+.arrow{
+  position: relative;
+  width: 40px;
+  height:40px;
+  color: black;
   /* background-color: purple; */
   cursor: pointer;
   font-size: 40px;
   outline: none;
   border: none;
+  display: block;
 }
+
+.arrow-container{
+  display: flex;
+  margin-bottom:40px;
+  margin-left: auto;
+  margin-right:auto;
+}
+
 
 #level-1{
   display: none;
-  background-color: purple;
+  background-color: #223868;
+  overflow: auto;
+  text-align: center;
+  /* transition: 1.5s; */
+  /* background-color: #FFFFFC; */
+}
+
+.color-bar{
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  height: 12px;
+  background-color: green;
+  display: flex;
+}
+
+.color-bar-item{
+  width: 33.33%;
+  height: 100%;
 }
 
 </style>
@@ -116,9 +144,19 @@ table#dots{
     </table>
   </div>
   <div id = "level-1">
-    <div id= "level-1-1"><i class="fas fa-arrow-up arrows"></i> </div>
-    <div id= "level-1-2"><i class="fas fa-arrow-up arrows"></i> </div>
-    <div id= "level-1-3"><i class="fas fa-arrow-up arrows" style = "right = 10px; bottom: 10px;"></i> </div>
+    <div class = "arrow-container" style="margin-top: 60px;">
+      <i id= "level-1-1" class="fas fa-arrow-up arrow" style="margin-left:auto; margin-right:auto;"></i>
+    </div>
+    <div class = "arrow-container">
+      <i id= "level-1-2" class="fas fa-arrow-up arrow" style="margin-left:auto; margin-right: 40px; transform: rotate(180deg);"></i>
+      <i id= "level-1-3" class="fas fa-arrow-up arrow" style="margin-left:40px; margin-right: auto;"></i>
+    </div>
+
+  </div>
+  <div class="color-bar">
+    <div class="color-bar-item" style="background-color: #CB0000;"></div>
+    <div class="color-bar-item" style="background-color: #ED7700;"></div>
+    <div class="color-bar-item" style="background-color: #FFC300;"></div>
   </div>
 </body>
 
@@ -139,7 +177,7 @@ table#dots{
     canvas.height = window.innerHeight;
     document.getElementById("level-1").style.width = window.innerWidth;
     document.getElementById("level-1").style.height = window.innerHeight - 220 + "px";
-    placeArrows();
+    // placeArrows();
   }
 
   var x = 0;
@@ -148,8 +186,8 @@ table#dots{
   var y = 0;
   var currentLevel = "menu";
 
-  var buttonArray = [ [""],
-                      [""] ];
+  var arrowArray = ["level-1-button", ["level-1-1","level-1-2","level-1-3"],
+                     "level-2-button", [""] ];
 
 
   function menuTransition(id){
@@ -188,7 +226,7 @@ table#dots{
       c.beginPath();
       c.arc(x,y,r,0,Math.PI*2,false);
       // c.arc(100,100,1000,0,Math.PI*2,false);
-      c.fillStyle = "white";
+      c.fillStyle = "#FFFFFC";
       c.fill();
       r = r + 10;
   }
@@ -226,44 +264,72 @@ table#dots{
       document.getElementById("menu").style.display = "none";
       document.body.style.backgroundColor = "white";
       document.getElementById("title").style.color = "black";
+      document.getElementById("title").style.fontSize = "110px";
+      document.getElementById("title").style.lineHeight = "95px";
 
-      placeArrows();
+      if(currentLevel == "level-1-button"){
+         document.getElementById("level-1").style.display = "block";
+       }
+       else if(currentLevel == "level-2-button"){
+         document.getElementById("level-2").style.display = "block";
+       }
+       else if(currentLevel == "level-3-button"){
+         document.getElementById("level-3").style.display = "block";
+       }
+       else if(currentLevel == "level-4-button"){
+         document.getElementById("level-4").style.display = "block";
+       }
+       else{
+       }
 
     }, 1500);
 
   }
 
-  function placeArrows(){
-    if(currentLevel == "level-1-button"){
-      document.getElementById("level-1").style.display = "block";
+  // function placeArrows(){
+  //   if(currentLevel == "level-1-button"){
+  //     document.getElementById("level-1").style.display = "block";
+  //
+  //     // document.getElementById("level-1-1").style.left = window.innerWidth/2 + "px";
+  //     // document.getElementById("level-1-1").style.top = 0 + "px";
+  //     // console.log("hello");
+  //     //
+  //     // document.getElementById("level-1-2").style.left = 100 + "px";
+  //     // document.getElementById("level-1-2").style.top = 100 + "px";
+  //     //
+  //     // document.getElementById("level-1-3").style.left = 300 + "px";
+  //     // document.getElementById("level-1-3").style.top = 300 + "px";
+  //     // console.log("hello3");
+  //   }
+  //   else if(currentLevel == "level-2-button"){
+  //     document.getElementById("level-2").style.display = "block";
+  //   }
+  //   else if(currentLevel == "level-3-button"){
+  //     document.getElementById("level-3").style.display = "block";
+  //   }
+  //   else if(currentLevel == "level-4-button"){
+  //     document.getElementById("level-4").style.display = "block";
+  //   }
+  //   else{
+  //   }
+  // }
 
-      document.getElementById("level-1-1").style.left = 0 + "px";
-      document.getElementById("level-1-1").style.top = 0 + "px";
-      console.log("hello");
+  function isComplete(){
+    var arrowLevelArray = null;
 
-      document.getElementById("level-1-2").style.left = 100 + "px";
-      document.getElementById("level-1-2").style.top = 100 + "px";
+    for(const a in arrowArray){
+      if(a[0] == currentLevel){
+        arrowLevelArray = a[1];
+        break;
+      }
+    }
 
-      document.getElementById("level-1-3").style.right = 300 + "px";
-      document.getElementById("level-1-3").style.bottom = 300 + "px";
-      console.log("hello3");
+    for(const a in arrowLevelArray){
+      if(document.getElementById(a).style.transform != "none")
+        return false;
     }
-    else if(currentLevel == "level-2-button"){
-      document.getElementById("level-2").style.display = "block";
-    }
-    else if(currentLevel == "level-3-button"){
-      document.getElementById("level-3").style.display = "block";
-    }
-    else if(currentLevel == "level-4-button"){
-      document.getElementById("level-4").style.display = "block";
-    }
-    else{
-    }
+    return true;
   }
-
-  function complete(){
-  }
-
 
 </script>
 
