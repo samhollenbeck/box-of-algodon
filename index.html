@@ -23,15 +23,38 @@ table#dots{
   margin-right: auto;
 }
 
-#title{
-  color: #FFFFFC;
-  font-size: 120px;
+/* #title{
   text-align: center;
   font-family: 'Poppins', sans-serif;
+  transition: 2.5s;
+  transition-property: color;
   line-height: 110px;
+  font-size: 120px;
+  color: #FFFFFC;
+} */
+
+#title{
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
   transition: 2.5s;
   transition-property: color;
 }
+
+#title:not(.level){
+  line-height: 110px;
+  font-size: 120px;
+  color: #FFFFFC;
+}
+
+#title.level{
+  line-height: 95px;
+  font-size: 110px;
+  color: black;
+  margin-block-start: 0.5em;
+  margin-block-end: 0.5em;
+}
+
+
 
 .dot {
   height: 55px;
@@ -261,9 +284,10 @@ table#dots{
 
       document.getElementById("menu").style.display = "none";
       document.body.style.backgroundColor = "white";
-      document.getElementById("title").style.color = "black";
-      document.getElementById("title").style.fontSize = "110px";
-      document.getElementById("title").style.lineHeight = "95px";
+      document.getElementById("title").classList.toggle("level");
+      // document.getElementById("title").style.color = "black";
+      // document.getElementById("title").style.fontSize = "110px";
+      // document.getElementById("title").style.lineHeight = "95px";
 
       if(currentLevel == "level-1-button"){
          document.getElementById("level-1").style.display = "block";
