@@ -31,8 +31,6 @@ table#dots{
   line-height: 110px;
   transition: 2.5s;
   transition-property: color;
-
-  /* font-family: 'Baloo 2', cursive; */
 }
 
 .dot {
@@ -86,12 +84,12 @@ table#dots{
 
 .arrow{
   position: relative;
-  width: 40px;
-  height:40px;
-  color: black;
+  width: 60px;
+  height:60px;
+  color: white;
   /* background-color: purple; */
   cursor: pointer;
-  font-size: 40px;
+  font-size: 60px;
   outline: none;
   border: none;
   display: block;
@@ -99,7 +97,7 @@ table#dots{
 
 .arrow-container{
   display: flex;
-  margin-bottom:40px;
+  margin-bottom:50px;
   margin-left: auto;
   margin-right:auto;
 }
@@ -176,7 +174,7 @@ table#dots{
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     document.getElementById("level-1").style.width = window.innerWidth;
-    document.getElementById("level-1").style.height = window.innerHeight - 220 + "px";
+    document.getElementById("level-1").style.height = window.innerHeight - document.getElementById("title").style.height + "px";
     // placeArrows();
   }
 
@@ -329,6 +327,16 @@ table#dots{
         return false;
     }
     return true;
+  }
+
+  function flip(id){
+    var element = document.getElementById(id);
+    if(element.style.transform == "none"){
+      element.style.transform = "rotate(180deg)";
+    }
+    else{
+      element.style.transfrom = "none";
+    }
   }
 
 </script>
