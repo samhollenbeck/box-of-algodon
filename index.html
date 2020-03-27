@@ -18,7 +18,7 @@ body {
   overflow: hidden;
 }
 
-table#dots{
+table.dots{
   margin-left: auto;
   margin-right: auto;
 }
@@ -62,15 +62,27 @@ table#dots{
   background-color: #FFFFFC;
   border-radius: 50%;
   display: inline-block;
-  margin-left: 12px;
-  margin-right: 12px;
+  /* margin-left: 12px;
+  margin-right: 12px; */
 
   text-align: center;
   font-family: 'Poppins', sans-serif;
-  color: #AC0000;
+  /* color: #AC0000; */
   font-size: 65px;
   line-height: 79px;
   font-weight: bold;
+}
+
+#menu .dot{
+  color: #AC0000;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+#level-1 .dot{
+  color: #223868;
+  margin-left: 40px;
+  margin-right: 40px;
 }
 
 @keyframes change {
@@ -116,6 +128,8 @@ table#dots{
   outline: none;
   border: none;
   display: block;
+  transition: 1s;
+  transition-property: transform;
 }
 
 .arrow-container{
@@ -154,8 +168,9 @@ table#dots{
 <body>
   <canvas id="my-canvas"></canvas>
   <h1 id = "title">The Box of <br> Algodón</h1>
+
   <div id = "menu">
-    <table id = "dots">
+    <table class = "dots">
       <tr>
         <th><span class="dot" id = "level-1-button">1</span></th>
         <th><span class="dot" id = "level-2-button">2</span></th>
@@ -164,16 +179,23 @@ table#dots{
       </tr>
     </table>
   </div>
+
   <div id = "level-1">
     <div class = "arrow-container" style="margin-top: 60px;">
-      <i id= "level-1-1" class="fas fa-arrow-up arrow" style="margin-left:auto; margin-right:auto;"></i>
+      <i id= "arrow-1-1" class="fas fa-arrow-up arrow" style="margin-left:auto; margin-right:auto; transform: rotate(0deg);"></i>
     </div>
     <div class = "arrow-container">
-      <i id= "level-1-2" class="fas fa-arrow-up arrow" style="margin-left:auto; margin-right: 40px; transform: rotate(180deg);"></i>
-      <i id= "level-1-3" class="fas fa-arrow-up arrow" style="margin-left:40px; margin-right: auto;"></i>
+      <i id= "arrow-1-2" class="fas fa-arrow-up arrow" style="margin-left:auto; margin-right: 40px; transform: rotate(180deg);"></i>
+      <i id= "arrow-1-3" class="fas fa-arrow-up arrow" style="margin-left:40px; margin-right: auto; transform: rotate(180deg);"></i>
     </div>
-
+    <table class = "dots">
+      <tr>
+        <th><span class="dot" id = "1-a">a</span></th>
+        <th><span class="dot" id = "1-b">b</span></th>
+      </tr>
+    </table>
   </div>
+
   <div class="color-bar">
     <div class="color-bar-item" style="background-color: #CB0000;"></div>
     <div class="color-bar-item" style="background-color: #ED7700;"></div>
@@ -182,11 +204,14 @@ table#dots{
 </body>
 
 <script>
-  document.getElementById("level-1-button").addEventListener("click", function (){menuTransition("level-1-button")});
-  document.getElementById("level-2-button").addEventListener("click", function (){menuTransition("level-2-button")});
-  document.getElementById("level-3-button").addEventListener("click", function (){menuTransition("level-3-button")});
-  document.getElementById("level-4-button").addEventListener("click", function (){menuTransition("level-4-button")});
+  getElement("level-1-button").addEventListener("click", function (){menuTransition("level-1-button")});
+  getElement("level-2-button").addEventListener("click", function (){menuTransition("level-2-button")});
+  getElement("level-3-button").addEventListener("click", function (){menuTransition("level-3-button")});
+  getElement("level-4-button").addEventListener("click", function (){menuTransition("level-4-button")});
   window.addEventListener("resize", windowReSize);
+
+  getElement("1-a").addEventListener("click", function (){flip(["arrow-1-1","arrow-1-2"])});
+  getElement("1-b").addEventListener("click", function (){flip(["arrow-1-1","arrow-1-3"])});
 
   var canvas = document.getElementById("my-canvas");
   var c = canvas.getContext("2d");
@@ -201,21 +226,25 @@ table#dots{
     // placeArrows();
   }
 
+  function getElement(id){
+    return document.getElementById(id);
+  }
+
   var x = 0;
   var max = 0;
   var r = 0;
   var y = 0;
   var currentLevel = "menu";
 
-  var arrowArray = ["level-1-button", ["level-1-1","level-1-2","level-1-3"],
-                     "level-2-button", [""] ];
+  var arrowArray = [ ["level-1-button", ["arrow-1-1","arrow-1-2","arrow-1-3"] ],
+                     ["level-2-button", [""] ] ];
 
 
   function menuTransition(id){
     var element = document.getElementById(id)
     var position = element.getBoundingClientRect();
-    var cx = position.left + element.clientWidth/2;;
-    var cy = position.top + element.clientWidth/2;;
+    var cx = position.left + element.clientWidth/2;
+    var cy = position.top + element.clientWidth/2;
 
     x = cx;
     y = cy;
@@ -308,6 +337,15 @@ table#dots{
 
   }
 
+  function isUp(element){
+    var string = element.style.transform;
+    string = string.substring(7,string.length-3);
+    if (string % 180 == 0){
+      return true;
+    }
+    return false;
+  }
+
   // function placeArrows(){
   //   if(currentLevel == "level-1-button"){
   //     document.getElementById("level-1").style.display = "block";
@@ -339,28 +377,31 @@ table#dots{
   function isComplete(){
     var arrowLevelArray = null;
 
-    for(const a in arrowArray){
+    for(const a of arrowArray){
+      // console.log(a[0]);
       if(a[0] == currentLevel){
         arrowLevelArray = a[1];
         break;
       }
     }
 
-    for(const a in arrowLevelArray){
-      if(document.getElementById(a).style.transform != "none")
+    for(const a of arrowLevelArray){
+      if(parseInt(getElement(a).style.transform.substring(7,getElement(a).style.transform.length-3),10) % 360 != 0){
         return false;
+      }
     }
+
+    alert("you win");
     return true;
   }
 
-  function flip(id){
-    var element = document.getElementById(id);
-    if(element.style.transform == "none"){
-      element.style.transform = "rotate(180deg)";
+  function flip(idArray){
+    for(const id of idArray){
+      var element = getElement(id);
+      let num = parseInt(element.style.transform.substring(7,element.style.transform.length-3),10) + 180;
+      element.style.transform = "rotate("+ num + "deg)";
     }
-    else{
-      element.style.transfrom = "none";
-    }
+    isComplete();
   }
 
 </script>
