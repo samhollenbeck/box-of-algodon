@@ -741,6 +741,7 @@ margin-right: 45px;
     return true;
   }
 
+
   function arrowAnimation(id, direction){
     if(getElement(id).classList.contains("animateDown")){
       getElement(id).classList.remove("animateDown");
@@ -749,15 +750,24 @@ margin-right: 45px;
       getElement(id).classList.remove("animateUp")
     }
 
+    setTimeout(function(){
+      if(direction == 0){
+        getElement(id).classList.add("animateUp");
+      }
+      else{
+        getElement(id).classList.add("animateDown");
+      }
+     }, 100);
+  }
+
   function colorBarSlideOut(){
     if(getElement("color-bar").classList.contains("colorBarSlideOut")){
       getElement(id).classList.remove("colorBarSlideOut");
     }
 
-    setTimeout(function(){
-        getElement("color-bar").classList.add("colorBarSlideOut");
-      }, 100);
+    setTimeout(function(){getElement("color-bar").classList.add("colorBarSlideOut");}, 100);
     }
+
 
   function flip(idArray){
     for(const id of idArray){
@@ -806,7 +816,6 @@ margin-right: 45px;
       // getElement("color-bar").style.height = window.innerHeight - parseInt(height.substring(0,height),10) + "px";
     }, 1200);
   }
+  // https://speckyboy.com/custom-hover-click-effects-css-javascript/
 
 </script>
-
-// https://speckyboy.com/custom-hover-click-effects-css-javascript/
